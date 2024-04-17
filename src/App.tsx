@@ -1,25 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Footer from './components/footer';
+import Header from './components/header';
+import Content from './components/content';
+import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
 function App() {
+  const [color, setColor] = useState("#b32aa9");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TonConnectUIProvider manifestUrl="https://%PUBLIC_URL%/ton-manifest.json">
+      <div className="App">
+        <Header color={color} ></Header>
+        <Content color={color} setColor={setColor}></Content>
+        <Footer color={color}></Footer>
+      </div>
+    </TonConnectUIProvider>
+
   );
 }
 
