@@ -2,6 +2,8 @@ import { SendTransactionRequest, useTonConnectUI } from "@tonconnect/ui-react";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { getMSG } from "../utils/msg-helper";
+import { createMetadata } from "../api";
+import { Address } from "@ton/core";
 
 type Params = {
     color: string,
@@ -20,11 +22,13 @@ function Content({ color, setColor }: Params) {
     })
     const getNFT = async (color: string) => {
         setIsButtonDisabled(true)
-        const msg = await getMSG(color);
+        const ownerAddress = Address.parseRaw(tonConnectUI.account?.address as string)
+        const msg = await getMSG(color, ownerAddress);
         const secondsInMinute = 60;
         const minutes = 10
         const waitingTime = minutes * secondsInMinute;
         const transaction: SendTransactionRequest = { validUntil: Math.floor(Date.now() / 1000) + waitingTime, messages: [msg] }
+        await createMetadata(color)
         await tonConnectUI.sendTransaction(transaction);
         setIsButtonDisabled(false)
     };
@@ -41,6 +45,7 @@ function Content({ color, setColor }: Params) {
                     get nft with color {color}
                 </button>
             </div>
+
         </section>
     );
 }
