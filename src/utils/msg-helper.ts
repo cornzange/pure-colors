@@ -9,7 +9,7 @@ type msgRes = {
 }
 
 const computeAmount = () => {
-    const nftDeployAmount = MIN_TONS_FOR_IMAGE + MIN_TONS_FOR_STORAGE + TRANSFER_GAS
+    const nftDeployAmount = MIN_TONS_FOR_STORAGE + TRANSFER_GAS
     const linkDeployAmount = MIN_TONS_FOR_STORAGE + TRANSFER_GAS
     const result = linkDeployAmount + nftDeployAmount + COMPUTE_FEE + OWNERS_FEE
 
